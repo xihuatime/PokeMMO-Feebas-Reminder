@@ -15,7 +15,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      # 统一 UTF-8，避免中文 exe 名在命令行传参时被系统代码页改写
+      # 统一 UTF-8，避免中文文件名在 Python 内部编码环节出问题
       PYTHONUTF8: '1'
 
     steps:
@@ -23,7 +23,7 @@ jobs:
       - name: 检出代码
         uses: actions/checkout@v4
 
-      # 2. 配置 Python 3.11（windows-latest 自带的 Python 含 tcl/tk，tkinter 可用）
+      # 2. 配置 Python 3.11（官方镜像自带 tcl/tk，tkinter 可用）
       - name: 配置 Python 3.11
         uses: actions/setup-python@v5
         with:
@@ -36,14 +36,36 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      # 4. 固定打包命令：单文件、无控制台窗口、产物名固定
-      #    用 python -m PyInstaller 而不是裸 pyinstaller，避免 Scripts 目录不在 PATH 时找不到命令
+      # 4. 打包 exe（固定参数：--onefile 单文件 / --windowed 无控制台 / --name 产物名）
+      #    等价于命令行：python -m PyInstaller --onefile --windowed --name "鱼点刷新提醒工具" reminder.py
+      #    这里用 shell: python 直接调 PyInstaller 接口，而不是让中文经过 shell 传参：
+      #    Windows runner 上中文参数会被系统代码页改写，实测产物名会变成 default.exe。
       - name: 打包 exe
-        run: python -m PyInstaller --onefile --windowed --name "鱼点刷新提醒工具" reminder.py
+        shell: python
+        run: |
+          import PyInstaller.__main__
+          PyInstaller.__main__.run([
+              "--onefile",
+              "--windowed",
+              "--name", "鱼点刷新提醒工具",
+              "reminder.py",
+          ])
 
-      # 5. 打印产物，方便在日志里确认 exe 名称是否正常（中文名乱码时可在此发现）
-      - name: 检查产物
-        run: Get-ChildItem dist | Format-Table Name, Length
+      # 5. 兜底：万一产物名不是预期值，强制改成固定名，保证 Release 附件名永远稳定
+      - name: 规范产物名
+        shell: python
+        run: |
+          import pathlib, sys
+          dist = pathlib.Path("dist")
+          exes = sorted(dist.glob("*.exe"))
+          print("打包产物:", [p.name for p in exes])
+          if not exes:
+              sys.exit("dist 下没有 exe，打包失败")
+          target = dist / "鱼点刷新提醒工具.exe"
+          if exes[0].name != target.name:
+              target.unlink(missing_ok=True)
+              exes[0].rename(target)
+              print("已重命名为:", target.name)
 
       # 6. 创建同名 Release 并上传 exe
       #    - body 是固定的基础说明，可在发布后到 Release 页面手动编辑补充

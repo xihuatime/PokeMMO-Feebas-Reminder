@@ -148,12 +148,12 @@ git push origin v1.1.0
 | 触发条件 | 仅 `push` 形如 `v*` 的标签，普通提交不会触发 |
 | 运行环境 | `windows-latest` |
 | Python | 3.11（官方镜像自带 tcl/tk，tkinter 可用） |
-| 打包命令 | `python -m PyInstaller --onefile --windowed --name "鱼点刷新提醒工具" reminder.py` |
+| 打包命令 | `--onefile --windowed --name "鱼点刷新提醒工具"`（工作流里用 `shell: python` 直接调 PyInstaller 接口，参数完全一致） |
 | 发布 | 用 `GITHUB_TOKEN` 创建同名 Release 并上传 `dist/*.exe` |
 
 > 若需要修改 exe 文件名或发布说明模板，改 `build-release.yml` 中「打包 exe」和「创建 Release 并上传附件」两步即可。
 >
-> 中文 exe 名在极少数环境下可能被系统代码页影响，工作流已设置 `PYTHONUTF8=1` 规避；如果构建日志里 `dist` 目录的文件名出现乱码，把 `--name` 换成英文（如 `FishReminder`）即可。
+> **为什么打包步骤用 `shell: python` 而不是直接写命令行**：GitHub 的 Windows runner 上，中文参数经过 shell 传参时会被系统代码页改写，实测产物名会变成 `default.exe`。改成在 Python 里直接调 `PyInstaller.__main__.run([...])`，参数以字符串形式传入，不经过 shell，产物名就稳定了。工作流还额外加了一步「规范产物名」兜底，无论 PyInstaller 起什么名，最终都会统一成 `鱼点刷新提醒工具.exe`。
 
 ## 项目结构
 
