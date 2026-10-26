@@ -56,7 +56,7 @@ The whole thing is one `.exe` and one tray icon — no main window, no installer
 
 **中文**
 
-1. 打开 [Releases](../../releases/latest) 页面，下载最新版的 `FishReminder.exe`。
+1. 打开 [Releases](../../releases/latest) 页面，下载最新版的 `PokeMMO-Feebas-Reminder.exe`。
 2. 双击运行，托盘出现绿色小鱼图标即启动成功，无需安装。
 3. 右键托盘图标可开关提醒；想先看效果，点「立即提醒一次」。
 
@@ -64,7 +64,7 @@ The whole thing is one `.exe` and one tray icon — no main window, no installer
 
 **English**
 
-1. Open the [Releases](../../releases/latest) page and download the latest `FishReminder.exe`.
+1. Open the [Releases](../../releases/latest) page and download the latest `PokeMMO-Feebas-Reminder.exe`.
 2. Double-click it — a green fish icon appears in the tray and it is running. No installation.
 3. Right-click the tray icon to toggle reminders, or hit **Fire a test reminder** to see it in action.
 
@@ -161,7 +161,7 @@ git push origin v1.1.0
 
 推送后 Actions 自动执行：检出代码 → 配置 Python 3.11 → 安装依赖 → PyInstaller 打包 → 创建同名 Release 并上传附件（约 2–4 分钟）。发布说明由固定模板加自动生成的提交记录组成，发布后仍可手动补充。
 
-> **附件名说明**：GitHub 的 Release 附件名只支持 ASCII，中文文件名会被平台静默改写成 `default.exe`。因此 CI 会把产物另存为 `FishReminder.exe` 再上传；本地打包的产物仍是中文名。
+> **附件名说明**：GitHub 的 Release 附件名只支持 ASCII，中文文件名会被平台静默改写成 `default.exe`。因此 CI 会把产物另存为 `PokeMMO-Feebas-Reminder.exe` 再上传；本地打包的产物仍是中文名。
 
 **English**
 
@@ -174,7 +174,7 @@ git push origin v1.1.0
 
 Actions then checks out the code, sets up Python 3.11, installs dependencies, builds with PyInstaller, and creates a Release with the exe attached (roughly 2–4 minutes). Release notes combine a fixed template with auto-generated commit history and can be edited afterwards.
 
-> **About the asset name**: GitHub only accepts ASCII release asset names — a Chinese filename is silently rewritten to `default.exe`. CI therefore re-saves the binary as `FishReminder.exe` before uploading. Locally built binaries keep the Chinese name.
+> **About the asset name**: GitHub only accepts ASCII release asset names — a Chinese filename is silently rewritten to `default.exe`. CI therefore re-saves the binary as `PokeMMO-Feebas-Reminder.exe` before uploading. Locally built binaries keep the Chinese name.
 
 ## ❓ 常见问题 / FAQ
 

@@ -43,3 +43,6 @@ config.local.json
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# ---------- 误建的嵌套仓库（GitHub Desktop 新建的空仓库），不纳入版本管理 ----------
+PokeMMO-Feebas-Reminder/

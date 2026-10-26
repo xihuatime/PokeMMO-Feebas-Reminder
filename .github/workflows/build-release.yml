@@ -64,7 +64,7 @@ jobs:
           print("打包产物:", [p.name for p in exes])
           if not exes:
               raise SystemExit("dist 下没有 exe，打包失败")
-          target = dist / "FishReminder.exe"
+          target = dist / "PokeMMO-Feebas-Reminder.exe"
           if exes[0].name != target.name:
               shutil.copy2(exes[0], target)
               exes[0].unlink()      # 保证 dist 里只剩一个 exe，避免重复上传
@@ -77,14 +77,14 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          name: 丑丑鱼点刷新提醒工具 ${{ github.ref_name }}
+          name: PokeMMO-Feebas-Reminder ${{ github.ref_name }}
           body: |
-            ## 丑丑鱼点刷新提醒工具 ${{ github.ref_name }}
+            ## PokeMMO-Feebas-Reminder ${{ github.ref_name }}
 
             ### 下载
-            下载下方附件 `FishReminder.exe`，双击即可运行，**无需安装 Python**。
+            下载下方附件 `PokeMMO-Feebas-Reminder.exe`，双击即可运行，**无需安装 Python**。
 
-            > 附件名用英文是因为 GitHub 的 Release 附件名只支持 ASCII，中文名会被平台改写成 `default.exe`。
+            > 附件名与仓库名一致（纯英文），因为 GitHub 的 Release 附件名只支持 ASCII，中文名会被平台改写成 `default.exe`。
             > 程序本身仍是「丑丑鱼点刷新提醒工具」，托盘和弹窗里显示的都是中文。
 
             > 首次运行时 Windows SmartScreen 可能提示"已保护你的电脑"，点「更多信息」→「仍要运行」即可（exe 未做代码签名）。
