@@ -231,12 +231,12 @@ Released under the [MIT License](LICENSE). Copyright © 2026 [xihuatime](https:/
 **中文**
 
 - 提交 [Issue](../../issues)（推荐，方便其他人检索到同样的答案）
-- 邮箱：`<your-email@example.com>`
+- 邮箱：`<1371365690@qq.com>`
 
 **English**
 
 - Open an [Issue](../../issues) — preferred, so others can find the answer too
-- Email: `<your-email@example.com>`
+- Email: `<1371365690@qq.com>`
 
 ---
 
