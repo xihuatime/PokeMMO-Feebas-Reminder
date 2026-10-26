@@ -94,7 +94,7 @@ jobs:
 
             ### 使用提示
             - 启动后常驻系统托盘，右键图标可开关提醒、播放测试、退出
-            - 提醒周期 45 分钟，锚点 22:15，全天循环
+            - 提醒周期 45 分钟，全天 24 小时循环
           generate_release_notes: true
           files: dist/*.exe          # 用通配符匹配，避免中文文件名在 YAML 里转义出问题
           fail_on_unmatched_files: true
