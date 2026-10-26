@@ -1,6 +1,6 @@
-# 鱼点刷新提醒工具 / Fish Spot Refresh Reminder
+# 丑丑鱼点刷新提醒工具 / Fish Spot Refresh Reminder
 
-**固定周期、全天循环的鱼点刷新提醒工具，静默驻留系统托盘，到点提醒不打断游戏节奏。**
+**固定周期、全天循环的丑丑鱼点刷新提醒工具，静默驻留系统托盘，到点提醒不打断游戏节奏。**
 **A fixed-interval refresh reminder that lives quietly in your system tray and never breaks your fishing rhythm.**
 
 [![Release](https://img.shields.io/github/v/release/xihuatime/PokeMMO-Feebas-Reminder?label=release&color=2ea44f)](../../releases/latest)
@@ -18,7 +18,7 @@ If this project saves you a few missed refreshes, a ⭐ Star is appreciated.
 
 **中文**
 
-PokeMMO 丰源地区 119 号路的鱼点按固定周期刷新，靠手感掐时间总会差那么几十秒，切出去看时钟又会打断钓鱼节奏。这个工具把计时交给后台：设好周期，它就在托盘里安静地数着，到点用系统通知、置顶弹窗和提示音同时提醒你。
+PokeMMO 丰源地区 119 号路的丑丑鱼点按固定周期刷新，靠手感掐时间总会差那么几十秒，切出去看时钟又会打断钓鱼节奏。这个工具把计时交给后台：设好周期，它就在托盘里安静地数着，到点用系统通知、置顶弹窗和提示音同时提醒你。
 
 整个软件只有一个 exe、一个托盘图标，没有主窗口、没有安装向导、不写注册表。周期算法按绝对时间取整，跨天自动衔接；只要周期分钟数能整除 1440（单日总分钟数），提醒时刻就永远不会逐日漂移。
 
@@ -111,12 +111,12 @@ python reminder.py --selfcheck   # 只跑周期算法自检，不启动界面
 **手动打包**（单文件、无控制台黑框）：
 
 ```bash
-python -m PyInstaller --onefile --windowed --name "鱼点刷新提醒工具" reminder.py
+python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工具" reminder.py
 ```
 
 也可以直接双击 `build_exe.bat`，脚本会自动检查 Python 与 tkinter、安装依赖并完成打包。
 
-**产物位置**：`dist\鱼点刷新提醒工具.exe`，可直接拷到任意 Windows 机器运行。
+**产物位置**：`dist\丑丑鱼点刷新提醒工具.exe`，可直接拷到任意 Windows 机器运行。
 
 **调整周期**：修改 `reminder.py` 顶部的 `PERIOD_MIN`（默认 45 分钟）后重新打包。请选择能整除 1440 的值（30 / 45 / 60 / 90 / 120），否则提醒时刻会逐日偏移，原因见 [常见问题](#-常见问题--faq)。
 
@@ -139,12 +139,12 @@ python reminder.py --selfcheck   # assert-based scheduler check only
 **Build a single-file, console-free exe**:
 
 ```bash
-python -m PyInstaller --onefile --windowed --name "鱼点刷新提醒工具" reminder.py
+python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工具" reminder.py
 ```
 
 Or just double-click `build_exe.bat` — it verifies Python and tkinter, installs dependencies, and builds for you.
 
-**Output**: `dist\鱼点刷新提醒工具.exe`, portable to any Windows machine.
+**Output**: `dist\丑丑鱼点刷新提醒工具.exe`, portable to any Windows machine.
 
 **Tuning the interval**: edit `PERIOD_MIN` at the top of `reminder.py` (default: 45 minutes) and rebuild. Pick a value that divides 1440 (30 / 45 / 60 / 90 / 120); anything else makes reminder times drift — see the [FAQ](#-常见问题--faq) for why.
 

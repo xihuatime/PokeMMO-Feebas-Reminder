@@ -37,7 +37,7 @@ jobs:
           pip install pyinstaller
 
       # 4. 打包 exe（固定参数：--onefile 单文件 / --windowed 无控制台 / --name 产物名）
-      #    等价于命令行：python -m PyInstaller --onefile --windowed --name "鱼点刷新提醒工具" reminder.py
+      #    等价于命令行：python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工具" reminder.py
       #    这里用 shell: python 直接调 PyInstaller 接口，而不是让中文经过 shell 传参：
       #    Windows runner 上中文参数会被系统代码页改写，实测产物名会变成 default.exe。
       - name: 打包 exe
@@ -47,7 +47,7 @@ jobs:
           PyInstaller.__main__.run([
               "--onefile",
               "--windowed",
-              "--name", "鱼点刷新提醒工具",
+              "--name", "丑丑鱼点刷新提醒工具",
               "reminder.py",
           ])
 
@@ -77,15 +77,15 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          name: 鱼点刷新提醒工具 ${{ github.ref_name }}
+          name: 丑丑鱼点刷新提醒工具 ${{ github.ref_name }}
           body: |
-            ## 鱼点刷新提醒工具 ${{ github.ref_name }}
+            ## 丑丑鱼点刷新提醒工具 ${{ github.ref_name }}
 
             ### 下载
             下载下方附件 `FishReminder.exe`，双击即可运行，**无需安装 Python**。
 
             > 附件名用英文是因为 GitHub 的 Release 附件名只支持 ASCII，中文名会被平台改写成 `default.exe`。
-            > 程序本身仍是「鱼点刷新提醒工具」，托盘和弹窗里显示的都是中文。
+            > 程序本身仍是「丑丑鱼点刷新提醒工具」，托盘和弹窗里显示的都是中文。
 
             > 首次运行时 Windows SmartScreen 可能提示"已保护你的电脑"，点「更多信息」→「仍要运行」即可（exe 未做代码签名）。
 

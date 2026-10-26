@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-鱼点提醒器 —— 常驻托盘的周期提醒小工具
+丑丑鱼点提醒器 —— 常驻托盘的周期提醒小工具
 
 规则：
     锚点 22:15，周期 45 分钟，全天 24 小时循环。
@@ -34,7 +34,7 @@ except ImportError:
 
 ANCHOR = datetime(2020, 1, 1, 22, 15)  # 相位锚点：某个普通日期的 22:15
 PERIOD_MIN = 45                        # 固定周期（分钟）
-MESSAGE = "鱼点已刷新"                  # 固定提醒内容
+MESSAGE = "丑丑鱼点已刷新"                  # 固定提醒内容
 POPUP_SECONDS = 8                      # 弹窗自动关闭秒数
 BG = "#009688"                         # 弹窗底色
 
@@ -135,7 +135,7 @@ class TrayUI:
 
         win = tk.Toplevel(self.root)
         self.popup = win
-        win.title("鱼点提醒")
+        win.title("丑丑鱼点提醒")
         win.configure(bg=BG)
         win.attributes("-topmost", True)  # 置顶但不抢焦点，避免打断正在输入的内容
         win.resizable(False, False)
@@ -177,21 +177,21 @@ def main():
         icon = icon_ref.get("icon")
         if icon is not None:
             try:
-                icon.notify(MESSAGE, "鱼点提醒")  # Windows 系统通知
+                icon.notify(MESSAGE, "丑丑鱼点提醒")  # Windows 系统通知
             except Exception:
                 pass  # 通知失败不影响弹窗和声音
 
     def on_schedule(target):
         icon = icon_ref.get("icon")
         if icon is not None:
-            icon.title = "鱼点提醒器 · 下次 %s" % target.strftime("%H:%M")
+            icon.title = "丑丑鱼点提醒器 · 下次 %s" % target.strftime("%H:%M")
 
     reminder = ReminderThread(fire, on_schedule)
 
     def toggle_enabled(icon, item):
         state["enabled"] = not state["enabled"]
         reminder.enabled = state["enabled"]
-        icon.title = "鱼点提醒器 · " + ("已开启" if state["enabled"] else "已暂停")
+        icon.title = "丑丑鱼点提醒器 · " + ("已开启" if state["enabled"] else "已暂停")
 
     def toggle_sound(icon, item):
         state["sound"] = not state["sound"]
@@ -211,7 +211,7 @@ def main():
         pystray.Menu.SEPARATOR,
         pystray.MenuItem("退出", quit_app),
     )
-    icon = pystray.Icon("fish_reminder", make_icon_image(), "鱼点提醒器", menu)
+    icon = pystray.Icon("fish_reminder", make_icon_image(), "丑丑鱼点提醒器", menu)
     icon_ref["icon"] = icon
 
     reminder.start()

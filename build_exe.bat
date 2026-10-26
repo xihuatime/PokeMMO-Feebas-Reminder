@@ -1,6 +1,6 @@
 @echo off
 rem ============================================================
-rem  鱼点刷新提醒工具 - 本地一键打包脚本（双击即可运行）
+rem  丑丑鱼点刷新提醒工具 - 本地一键打包脚本（双击即可运行）
 rem  产物输出到 dist\ 目录，方便本地测试
 rem  打包参数与 GitHub Actions 保持一致，两边产物完全一样
 rem ============================================================
@@ -8,7 +8,7 @@ setlocal
 cd /d "%~dp0"
 
 echo ============================================
-echo   鱼点刷新提醒工具 - 本地打包
+echo   丑丑鱼点刷新提醒工具 - 本地打包
 echo ============================================
 echo.
 
@@ -46,7 +46,7 @@ if errorlevel 1 (
 rem ---------- 4. 打包 ----------
 rem  固定参数：--onefile 单文件 / --windowed 无控制台黑框 / --name 产物名
 echo [4/4] 开始打包，约需 1-2 分钟...
-python -m PyInstaller --onefile --windowed --name "鱼点刷新提醒工具" reminder.py
+python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工具" reminder.py
 if errorlevel 1 (
     echo [错误] 打包失败，请查看上方 PyInstaller 的报错信息。
     pause
@@ -55,7 +55,7 @@ if errorlevel 1 (
 
 echo.
 echo ============================================
-echo   打包完成：dist\鱼点刷新提醒工具.exe
+echo   打包完成：dist\丑丑鱼点刷新提醒工具.exe
 echo   双击该 exe 即可运行，目标机器无需 Python
 echo ============================================
 pause
