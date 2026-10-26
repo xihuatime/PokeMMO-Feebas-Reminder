@@ -37,7 +37,7 @@
 ## 下载使用
 
 1. 打开 [Releases](../../releases/latest) 页面
-2. 下载最新版本里的 `鱼点刷新提醒工具.exe`
+2. 下载最新版本里的 `FishReminder.exe`（就是鱼点刷新提醒工具，附件名用英文是因为 GitHub 不支持中文附件名）
 3. 双击运行，托盘出现绿色小鱼图标即启动成功
 
 > 首次运行 Windows SmartScreen 可能提示「已保护你的电脑」，点「更多信息」→「仍要运行」即可（exe 未做代码签名，属于正常现象）。
@@ -53,7 +53,7 @@
 
 ### 开机自启（可选）
 
-`Win + R` 输入 `shell:startup` 打开启动目录，把 `鱼点刷新提醒工具.exe` 的**快捷方式**放进去即可。
+`Win + R` 输入 `shell:startup` 打开启动目录，把 `FishReminder.exe`（本地打包则是 `鱼点刷新提醒工具.exe`）的**快捷方式**放进去即可。
 
 ## 本地运行（源码方式）
 
@@ -151,9 +151,12 @@ git push origin v1.1.0
 | 打包命令 | `--onefile --windowed --name "鱼点刷新提醒工具"`（工作流里用 `shell: python` 直接调 PyInstaller 接口，参数完全一致） |
 | 发布 | 用 `GITHUB_TOKEN` 创建同名 Release 并上传 `dist/*.exe` |
 
-> 若需要修改 exe 文件名或发布说明模板，改 `build-release.yml` 中「打包 exe」和「创建 Release 并上传附件」两步即可。
+> 若需要修改 exe 文件名或发布说明模板，改 `build-release.yml` 中「打包 exe」「准备上传附件」和「创建 Release 并上传附件」三步即可。
 >
-> **为什么打包步骤用 `shell: python` 而不是直接写命令行**：GitHub 的 Windows runner 上，中文参数经过 shell 传参时会被系统代码页改写，实测产物名会变成 `default.exe`。改成在 Python 里直接调 `PyInstaller.__main__.run([...])`，参数以字符串形式传入，不经过 shell，产物名就稳定了。工作流还额外加了一步「规范产物名」兜底，无论 PyInstaller 起什么名，最终都会统一成 `鱼点刷新提醒工具.exe`。
+> **两个实测踩出来的坑，已经写进工作流了：**
+>
+> 1. **打包步骤用 `shell: python` 而不是直接写命令行**。GitHub 的 Windows runner 上，中文参数经过 shell 传参会被系统代码页改写，改用 `PyInstaller.__main__.run([...])` 以字符串传参、不经过 shell，产物名才稳定。
+> 2. **GitHub 的 Release 附件名只支持 ASCII**。哪怕产物叫 `鱼点刷新提醒工具.exe`，上传后服务器也会把附件名改写成 `default.exe`（Action 只能把原中文名塞进 `label` 字段，UI 上看着正常，用户下载下来却是 `default.exe`）。所以工作流在上传前会另存一份 `FishReminder.exe` 作为附件名——本地产物仍是中文名，程序界面也全是中文。
 
 ## 项目结构
 

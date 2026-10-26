@@ -51,21 +51,24 @@ jobs:
               "reminder.py",
           ])
 
-      # 5. 兜底：万一产物名不是预期值，强制改成固定名，保证 Release 附件名永远稳定
-      - name: 规范产物名
+      # 5. 准备上传附件
+      #    GitHub 的 Release 附件名只接受 ASCII，中文名会被服务器改写成 default.exe
+      #    （action 只能把原中文名写进 label，UI 上显示正常，但用户下载到的是 default.exe）。
+      #    所以本地产物保持中文名，上传前另存一份 ASCII 名的副本。
+      - name: 准备上传附件
         shell: python
         run: |
-          import pathlib, sys
+          import pathlib, shutil
           dist = pathlib.Path("dist")
           exes = sorted(dist.glob("*.exe"))
           print("打包产物:", [p.name for p in exes])
           if not exes:
-              sys.exit("dist 下没有 exe，打包失败")
-          target = dist / "鱼点刷新提醒工具.exe"
+              raise SystemExit("dist 下没有 exe，打包失败")
+          target = dist / "FishReminder.exe"
           if exes[0].name != target.name:
-              target.unlink(missing_ok=True)
-              exes[0].rename(target)
-              print("已重命名为:", target.name)
+              shutil.copy2(exes[0], target)
+              exes[0].unlink()      # 保证 dist 里只剩一个 exe，避免重复上传
+          print("上传用附件:", target.name, f"{target.stat().st_size/1024/1024:.1f} MB")
 
       # 6. 创建同名 Release 并上传 exe
       #    - body 是固定的基础说明，可在发布后到 Release 页面手动编辑补充
@@ -79,7 +82,10 @@ jobs:
             ## 鱼点刷新提醒工具 ${{ github.ref_name }}
 
             ### 下载
-            下载下方附件 `鱼点刷新提醒工具.exe`，双击即可运行，**无需安装 Python**。
+            下载下方附件 `FishReminder.exe`，双击即可运行，**无需安装 Python**。
+
+            > 附件名用英文是因为 GitHub 的 Release 附件名只支持 ASCII，中文名会被平台改写成 `default.exe`。
+            > 程序本身仍是「鱼点刷新提醒工具」，托盘和弹窗里显示的都是中文。
 
             > 首次运行时 Windows SmartScreen 可能提示"已保护你的电脑"，点「更多信息」→「仍要运行」即可（exe 未做代码签名）。
 
