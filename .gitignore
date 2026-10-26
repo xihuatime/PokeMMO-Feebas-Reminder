@@ -1,0 +1,45 @@
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+eggs/
+.eggs/
+sdist/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ---------- 虚拟环境 ----------
+.venv/
+venv/
+env/
+ENV/
+
+# ---------- PyInstaller 打包产物 ----------
+dist/
+*.spec
+
+# ---------- 测试与缓存 ----------
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ---------- 本地配置 / 日志（不上传个人环境信息） ----------
+config.local.json
+*.log
+*.bak
+
+# ---------- 编辑器 / 系统 ----------
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini

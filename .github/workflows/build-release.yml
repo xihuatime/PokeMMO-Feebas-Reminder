@@ -1,0 +1,74 @@
+# 推送 v* 标签（如 v1.0.0 / v1.1.0）时自动打包 exe 并创建同名 Release
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'          # 只有 v 开头的标签会触发，普通提交和分支推送不会触发
+
+# 创建 Release 并上传附件需要仓库写权限（GitHub 默认 GITHUB_TOKEN 是只读的）
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    env:
+      # 统一 UTF-8，避免中文 exe 名在命令行传参时被系统代码页改写
+      PYTHONUTF8: '1'
+
+    steps:
+      # 1. 检出仓库代码
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      # 2. 配置 Python 3.11（windows-latest 自带的 Python 含 tcl/tk，tkinter 可用）
+      - name: 配置 Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. 安装依赖：先 requirements.txt，再单独装 pyinstaller
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      # 4. 固定打包命令：单文件、无控制台窗口、产物名固定
+      #    用 python -m PyInstaller 而不是裸 pyinstaller，避免 Scripts 目录不在 PATH 时找不到命令
+      - name: 打包 exe
+        run: python -m PyInstaller --onefile --windowed --name "鱼点刷新提醒工具" reminder.py
+
+      # 5. 打印产物，方便在日志里确认 exe 名称是否正常（中文名乱码时可在此发现）
+      - name: 检查产物
+        run: Get-ChildItem dist | Format-Table Name, Length
+
+      # 6. 创建同名 Release 并上传 exe
+      #    - body 是固定的基础说明，可在发布后到 Release 页面手动编辑补充
+      #    - generate_release_notes: true 会自动把本次 tag 之间的提交记录追加到 body 末尾
+      - name: 创建 Release 并上传附件
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: 鱼点刷新提醒工具 ${{ github.ref_name }}
+          body: |
+            ## 鱼点刷新提醒工具 ${{ github.ref_name }}
+
+            ### 下载
+            下载下方附件 `鱼点刷新提醒工具.exe`，双击即可运行，**无需安装 Python**。
+
+            > 首次运行时 Windows SmartScreen 可能提示"已保护你的电脑"，点「更多信息」→「仍要运行」即可（exe 未做代码签名）。
+
+            ### 更新内容
+            <!-- 在这里手动补充本次更新的具体说明，也可以在发布后到 Release 页面编辑 -->
+
+            ### 使用提示
+            - 启动后常驻系统托盘，右键图标可开关提醒、播放测试、退出
+            - 提醒周期 45 分钟，锚点 22:15，全天循环
+          generate_release_notes: true
+          files: dist/*.exe          # 用通配符匹配，避免中文文件名在 YAML 里转义出问题
+          fail_on_unmatched_files: true
+          draft: false
+          prerelease: false
