@@ -37,7 +37,7 @@ jobs:
           pip install pyinstaller
 
       # 4. 打包 exe（固定参数：--onefile 单文件 / --windowed 无控制台 / --name 产物名）
-      #    等价于命令行：python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工具" reminder.py
+      #    等价于命令行：python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工具" --icon "icon.ico" reminder.py
       #    这里用 shell: python 直接调 PyInstaller 接口，而不是让中文经过 shell 传参：
       #    Windows runner 上中文参数会被系统代码页改写，实测产物名会变成 default.exe。
       - name: 打包 exe
@@ -48,6 +48,7 @@ jobs:
               "--onefile",
               "--windowed",
               "--name", "丑丑鱼点刷新提醒工具",
+              "--icon", "icon.ico",
               "reminder.py",
           ])
 

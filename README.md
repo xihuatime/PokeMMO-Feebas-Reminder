@@ -102,7 +102,7 @@ python reminder.py --selfcheck   # 只跑周期算法自检，不启动界面
 **手动打包**（单文件、无控制台黑框）：
 
 ```bash
-python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工具" reminder.py
+python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工具" --icon "icon.ico" reminder.py
 ```
 
 也可以直接双击 `build_exe.bat`，脚本会自动检查 Python 与 tkinter、安装依赖并完成打包。
@@ -130,7 +130,7 @@ python reminder.py --selfcheck   # assert-based scheduler check only
 **Build a single-file, console-free exe**:
 
 ```bash
-python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工具" reminder.py
+python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工具" --icon "icon.ico" reminder.py
 ```
 
 Or just double-click `build_exe.bat` — it verifies Python and tkinter, installs dependencies, and builds for you.

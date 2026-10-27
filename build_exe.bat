@@ -27,7 +27,7 @@ rem  没有 tkinter 打出来的 exe 会缺弹窗，这里提前拦住，别等到运行才发现
 echo [2/4] 检查 tkinter 组件...
 python -c "import tkinter" >nul 2>&1
 if errorlevel 1 (
-    echo [错误] 当前 Python 缺少 tkinter，打出的 exe 会没有弹窗提示。
+    echo [错误] 当前 Python 缺少 tkinter，打出的 exe 会没有主界面。
     echo        修复：重新运行 Python 安装包 -^> Modify -^> 勾选 "tcl/tk and IDLE" -^> Install。
     pause
     exit /b 1
@@ -44,9 +44,9 @@ if errorlevel 1 (
 )
 
 rem ---------- 4. 打包 ----------
-rem  固定参数：--onefile 单文件 / --windowed 无控制台黑框 / --name 产物名
+rem  固定参数：--onefile 单文件 / --windowed 无控制台黑框 / --name 产物名 / --icon exe 图标
 echo [4/4] 开始打包，约需 1-2 分钟...
-python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工具" reminder.py
+python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工具" --icon "icon.ico" reminder.py
 if errorlevel 1 (
     echo [错误] 打包失败，请查看上方 PyInstaller 的报错信息。
     pause
