@@ -41,10 +41,9 @@ except ImportError:
 ANCHOR = datetime(2020, 1, 1, 22, 15)
 PERIOD_MIN = 45
 MESSAGE = "丑丑鱼点已刷新"
-POPUP_SECONDS = 8
 BG = "#009688"
 
-APP_VERSION = "1.3.3"
+APP_VERSION = "1.3.4"
 APP_REPO = "https://github.com/xihuatime/PokeMMO-Feebas-Reminder"
 APP_CONTACT = "1371365690@qq.com"
 
@@ -313,44 +312,21 @@ class TrayUI:
     def __init__(self, root):
         self.root = root
         self.queue = queue.Queue()
-        self.popup = None
         root.after(200, self._poll)
 
-    def post(self, kind, value=None):
-        self.queue.put((kind, value))
+    def post(self, kind):
+        self.queue.put((kind, None))
 
     def _poll(self):
         while True:
             try:
-                kind, value = self.queue.get_nowait()
+                kind = self.queue.get_nowait()[0]
             except queue.Empty:
                 break
             if kind == "quit":
                 self.root.destroy()
                 return
-            self._show_popup(value)
         self.root.after(200, self._poll)
-
-    def _show_popup(self, text):
-        if self.popup is not None and self.popup.winfo_exists():
-            self.popup.destroy()
-
-        win = tk.Toplevel(self.root)
-        self.popup = win
-        win.title("丑丑鱼点提醒")
-        win.configure(bg=BG)
-        win.attributes("-topmost", True)
-        win.resizable(False, False)
-        w, h = 340, 130
-        sw, sh = win.winfo_screenwidth(), win.winfo_screenheight()
-        win.geometry("%dx%d+%d+%d" % (w, h, (sw - w) // 2, sh // 3))
-        tk.Label(win, text=text, font=("Microsoft YaHei UI", 20, "bold"),
-                 fg="white", bg=BG).pack(expand=True)
-        tk.Label(win, text="点击窗口关闭 · %d 秒后自动消失" % POPUP_SECONDS,
-                 font=("Microsoft YaHei UI", 9), fg="#c8e6e2", bg=BG).pack(pady=(0, 10))
-        win.bind("<Button-1>", lambda e: win.destroy())
-        win.after(POPUP_SECONDS * 1000, lambda: win.winfo_exists() and win.destroy())
-        win.lift()
 
 
 class MainWindow:
@@ -452,7 +428,6 @@ def main():
     icon_ref = {}
 
     def fire():
-        ui.post("popup", MESSAGE)
         if state["sound"]:
             play_sound()
         icon = icon_ref.get("icon")

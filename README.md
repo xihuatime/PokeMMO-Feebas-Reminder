@@ -18,13 +18,13 @@ If this project saves you a few missed refreshes, a ⭐ Star is appreciated.
 
 **中文**
 
-PokeMMO 丰源地区 119 号路、神奥地区天冠山的丑丑鱼点按固定周期刷新，靠手感掐时间总会差那么几十秒，切出去看时钟又会打断钓鱼节奏。这个工具把计时交给后台：设好周期，它就在托盘里安静地数着，到点用系统通知、置顶弹窗和提示音同时提醒你。
+PokeMMO 丰源地区 119 号路、神奥地区天冠山的丑丑鱼点按固定周期刷新，靠手感掐时间总会差那么几十秒，切出去看时钟又会打断钓鱼节奏。这个工具把计时交给后台：设好周期，它就在托盘里安静地数着，到点弹出系统通知并播放提示音。
 
 整个软件只有一个 exe：主界面实时显示当前时间与距离下次刷新的倒计时，右上角可查看版本与联系方式，关掉窗口就收回托盘继续计时。没有安装向导、不写注册表。周期算法按绝对时间取整，跨天自动衔接；只要周期分钟数能整除 1440（单日总分钟数），提醒时刻就永远不会逐日漂移。
 
 **English**
 
-Fish spots on Route 119 in PokeMMO's Hoenn region and in Mt. Coronet in Sinnoh refresh on a fixed interval. Timing it by feel always lands a few seconds off, and alt-tabbing to check the clock breaks your rhythm. This tool takes the timing off your hands: set the interval once, and it counts quietly in the tray, then fires a system notification, a topmost popup, and a sound cue at exactly the right moment.
+Fish spots on Route 119 in PokeMMO's Hoenn region and in Mt. Coronet in Sinnoh refresh on a fixed interval. Timing it by feel always lands a few seconds off, and alt-tabbing to check the clock breaks your rhythm. This tool takes the timing off your hands: set the interval once, and it counts quietly in the tray, then raises a system notification and plays a sound cue at exactly the right moment.
 
 The whole thing is a single `.exe`: the main window shows the current time and a live countdown to the next refresh, the corner holds version and contact info, and closing the window drops it back into the tray. No installer, no registry writes. The scheduler rounds against absolute time, so cycles roll over midnight seamlessly. As long as the interval divides 1440 evenly (minutes in a day), reminder times never drift from one day to the next.
 
@@ -35,7 +35,7 @@ The whole thing is a single `.exe`: the main window shows the current time and a
 - ⏱️ **精准周期算法** — 固定周期全天循环，跨天无缝衔接；周期能整除 1440 时，每天的提醒时刻完全一致，不存在逐日偏移。
 - 🕒 **主界面倒计时** — 大字显示当前时间，下方实时倒数到下次刷新，一眼看清还要等多久。
 - 🖥️ **系统托盘驻留** — 关掉主窗口即收回托盘，不占任务栏空间、计时不中断，适合长期后台挂着。
-- 🔔 **三重提醒** — 系统通知、置顶弹窗、提示音同时触发，任一通道被系统拦截也不至于错过。
+- 🔔 **双通道提醒** — 右下角系统通知 + 提示音同时触发，通知被系统拦截时还有声音兜底。
 - 👀 **状态可见** — 鼠标悬停托盘图标，即可看到下次提醒的具体时刻。
 - 🎛️ **灵活开关** — 托盘右键菜单可随时暂停/恢复提醒、单独关闭提示音，或一键退出。
 - 📦 **单文件绿色版** — 免安装，下载双击即用，目标机器无需 Python 环境。
@@ -47,7 +47,7 @@ The whole thing is a single `.exe`: the main window shows the current time and a
 - ⏱️ **Deterministic scheduler** — A fixed interval loops around the clock and rolls over midnight seamlessly. When the interval divides 1440, every day's reminder times are identical — zero drift.
 - 🕒 **Live countdown** — A large clock with a real-time countdown to the next refresh, so you always know how long is left.
 - 🖥️ **Tray-resident** — Closing the window drops it into the tray. No taskbar footprint, the countdown keeps running; built to sit in the background for weeks.
-- 🔔 **Triple-channel alerts** — System notification, topmost popup, and a sound cue fire together, so a blocked channel never costs you a refresh.
+- 🔔 **Two-channel alerts** — A system notification in the bottom-right corner plus a sound cue, so a blocked notification still leaves you an audible heads-up.
 - 👀 **Next run at a glance** — Hover the tray icon to see exactly when the next reminder is due.
 - 🎛️ **On-demand control** — The tray menu pauses or resumes reminders, mutes the sound, fires a test alert, and exits cleanly.
 - 📦 **Single-file portable** — No installer, no Python on the target machine. Download, double-click, done.
@@ -78,19 +78,19 @@ The whole thing is a single `.exe`: the main window shows the current time and a
 
 > 以下为占位图，把实际截图放进 `docs/images/` 并保持同名即可替换。
 
-| 主界面 / Main Window | 提醒弹窗 / Popup | 托盘菜单 / Tray Menu |
-| :---: | :---: | :---: |
-| ![主界面](docs/images/main-window.png) | ![提醒弹窗](docs/images/popup.png) | ![托盘菜单](docs/images/tray-menu.png) |
-| 当前时间 + 下次刷新倒计时 | 到点弹出的置顶提醒 | 右键菜单：显示主窗口、开关提醒、提示音、退出 |
+| 主界面 / Main Window | 托盘菜单 / Tray Menu |
+| :---: | :---: |
+| ![主界面](docs/images/main-window.png) | ![托盘菜单](docs/images/tray-menu.png) |
+| 当前时间 + 下次刷新倒计时 | 右键菜单：显示主窗口、开关提醒、提示音、退出 |
 
 **English**
 
 > Placeholders — drop real screenshots into `docs/images/` using the same filenames.
 
-| Main Window | Popup | Tray Menu |
-| :---: | :---: | :---: |
-| ![Main Window](docs/images/main-window.png) | ![Popup](docs/images/popup.png) | ![Tray Menu](docs/images/tray-menu.png) |
-| Current time + countdown to the next refresh | The topmost alert when a cycle fires | Right-click menu: show window, toggle, mute, quit |
+| Main Window | Tray Menu |
+| :---: | :---: |
+| ![Main Window](docs/images/main-window.png) | ![Tray Menu](docs/images/tray-menu.png) |
+| Current time + countdown to the next refresh | Right-click menu: show window, toggle, mute, quit |
 
 ## ⚙️ 本地运行与构建 / Build from Source
 
@@ -98,7 +98,7 @@ The whole thing is a single `.exe`: the main window shows the current time and a
 
 **环境要求**：Windows 10/11，Python 3.9 及以上。
 
-**前置注意**：安装 Python 时务必勾选 `tcl/tk and IDLE` 组件，否则 `import tkinter` 会失败——提醒弹窗依赖它。
+**前置注意**：安装 Python 时务必勾选 `tcl/tk and IDLE` 组件，否则 `import tkinter` 会失败——主界面依赖它。
 
 ```bash
 # 安装依赖（仅 pystray + Pillow，tkinter / winsound 为标准库）
@@ -126,7 +126,7 @@ python -m PyInstaller --onefile --windowed --name "丑丑鱼点刷新提醒工�
 
 **Requirements**: Windows 10/11, Python 3.9+.
 
-**Before you start**: make sure `tcl/tk and IDLE` is checked during the Python install — otherwise `import tkinter` fails and the alert popup breaks.
+**Before you start**: make sure `tcl/tk and IDLE` is checked during the Python install — otherwise `import tkinter` fails and the main window breaks.
 
 ```bash
 # Dependencies (just pystray + Pillow; tkinter and winsound ship with Python)
@@ -185,8 +185,8 @@ Actions then checks out the code, sets up Python 3.11, installs dependencies, bu
 **Q：运行或打包时提示 `No module named 'tkinter'`**
 A：安装 Python 时没勾 `tcl/tk and IDLE`。重新运行安装包 → `Modify` → 勾选该组件 → 安装完成后重新打包。用 `build_exe.bat` 打包会提前检查并给出提示。
 
-**Q：有弹窗和提示音，但收不到系统通知**
-A：多半是 Windows 专注助手或勿扰模式拦截了通知。到「设置 → 系统 → 通知」里允许该程序通知即可；弹窗与提示音不受影响。
+**Q：有提示音，但收不到系统通知**
+A：多半是 Windows 专注助手或勿扰模式拦截了通知。到「设置 → 系统 → 通知」里允许该程序通知即可；提示音不受影响。
 
 **Q：什么情况下提醒时间会逐日偏移**
 A：周期分钟数不能整除 1440 时。一天是 1440 分钟，只有能整除它的周期（30 / 45 / 60 / 90 / 120 …）才能让周期相位每天重合；改成 50 分钟这类值，每次循环都会累积余数，提醒时刻会一天天往后挪。程序仍可运行，只是不再是固定的每日时刻表。
@@ -199,8 +199,8 @@ A：PyInstaller 打包的未签名 exe 常被启发式引擎误判。把文件�
 **Q: `No module named 'tkinter'` when running or building**
 A: Python was installed without `tcl/tk and IDLE`. Re-run the installer → `Modify` → check that component → reinstall → rebuild. `build_exe.bat` checks for this up front and tells you.
 
-**Q: Popup and sound work, but there is no system notification**
-A: Windows Focus Assist / Do Not Disturb is usually swallowing it. Allow the app under Settings → System → Notifications. The popup and sound are unaffected.
+**Q: Sound plays, but there is no system notification**
+A: Windows Focus Assist / Do Not Disturb is usually swallowing it. Allow the app under Settings → System → Notifications. The sound is unaffected.
 
 **Q: When do reminder times drift from day to day?**
 A: When the interval does not divide 1440. A day has 1440 minutes, and only its divisors (30 / 45 / 60 / 90 / 120 …) keep the cycle phase aligned every day. Set it to something like 50 and the remainder accumulates, pushing each cycle a little later. The app still runs — it just stops being a fixed daily timetable.
