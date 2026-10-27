@@ -440,6 +440,12 @@ def make_icon_image():
 
 def main():
     root = tk.Tk()
+    try:
+        _dpi = root.winfo_fpixels("1i")
+        if _dpi > 0:
+            root.tk.call("tk", "scaling", _dpi / 72.0)
+    except Exception:
+        pass
     state = {"enabled": True, "sound": True}
     window = MainWindow(root, lambda: state["enabled"])
     ui = TrayUI(root)
