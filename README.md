@@ -1,4 +1,4 @@
-# 丑丑鱼点刷新提醒工具 / Fish Spot Refresh Reminder
+# 丑丑鱼点刷新提醒工具 / Feebas Spot Refresh Reminder
 
 **固定周期、全天循环的丑丑鱼点刷新提醒工具，静默驻留系统托盘，到点提醒不打断游戏节奏。**
 **A fixed-interval refresh reminder that lives quietly in your system tray and never breaks your fishing rhythm.**
@@ -24,7 +24,7 @@ PokeMMO 丰源地区 119 号路、神奥地区天冠山的丑丑鱼点按固定�
 
 **English**
 
-Fish spots on Route 119 in PokeMMO's Hoenn region and in Mt. Coronet in Sinnoh refresh on a fixed interval. Timing it by feel always lands a few seconds off, and alt-tabbing to check the clock breaks your rhythm. This tool takes the timing off your hands: set the interval once, and it counts quietly in the tray, then raises a system notification and plays a sound cue at exactly the right moment.
+Feebas spots on Route 119 in PokeMMO's Hoenn region and in Mt. Coronet in Sinnoh refresh on a fixed interval. Timing it by feel always lands a few seconds off, and alt-tabbing to check the clock breaks your rhythm. This tool takes the timing off your hands: set the interval once, and it counts quietly in the tray, then raises a system notification and plays a sound cue at exactly the right moment.
 
 The whole thing is a single `.exe`: the main window shows the current time and a live countdown to the next refresh, the corner holds version and contact info, and closing the window drops it back into the tray. No installer, no registry writes. The scheduler rounds against absolute time, so cycles roll over midnight seamlessly. As long as the interval divides 1440 evenly (minutes in a day), reminder times never drift from one day to the next.
 
@@ -74,23 +74,12 @@ The whole thing is a single `.exe`: the main window shows the current time and a
 
 ## 🖼️ 界面预览 / Screenshots
 
-**中文**
-
-> 以下为占位图，把实际截图放进 `docs/images/` 并保持同名即可替换。
+**中文 / English**
 
 | 主界面 / Main Window | 托盘菜单 / Tray Menu |
 | :---: | :---: |
 | ![主界面](docs/images/main-window.png) | ![托盘菜单](docs/images/tray-menu.png) |
-| 当前时间 + 下次刷新倒计时 | 右键菜单：显示主窗口、开关提醒、提示音、退出 |
-
-**English**
-
-> Placeholders — drop real screenshots into `docs/images/` using the same filenames.
-
-| Main Window | Tray Menu |
-| :---: | :---: |
-| ![Main Window](docs/images/main-window.png) | ![Tray Menu](docs/images/tray-menu.png) |
-| Current time + countdown to the next refresh | Right-click menu: show window, toggle, mute, quit |
+| 当前时间 + 下次刷新倒计时<br>Current time + countdown to the next refresh | 右键菜单：显示主窗口、开关提醒、提示音、退出<br>Right-click menu: show window, toggle, mute, quit |
 
 ## ⚙️ 本地运行与构建 / Build from Source
 
