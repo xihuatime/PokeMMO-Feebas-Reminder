@@ -17,9 +17,35 @@
 依赖：pystray、Pillow（tkinter / winsound 是标准库自带的）
 """
 
+import ctypes
+import sys
+
+# Windows 高分缩放（125% / 150%）下 tkinter 界面发虚，是因为进程默认按 96 DPI 绘制再被系统位图拉伸。
+# 这段必须在 import tkinter 之前执行，否则 Tk 已按旧 DPI 初始化，再声明就无效了。
+if sys.platform == "win32":
+    _ok = False
+    try:
+        # 优先 Per-Monitor v2：连标题栏、菜单等非客户区也按显示器缩放正确绘制。
+        # 必须显式声明 argtypes：DPI_AWARENESS_CONTEXT 是 64 位句柄，直接传 -4 会被截断成 32 位导致调用失败。
+        _user32 = ctypes.windll.user32
+        _user32.SetProcessDpiAwarenessContext.argtypes = [ctypes.c_void_p]
+        _user32.SetProcessDpiAwarenessContext.restype = ctypes.c_bool
+        _ok = bool(_user32.SetProcessDpiAwarenessContext(ctypes.c_void_p(-4)))
+    except Exception:
+        _ok = False
+    if not _ok:
+        try:
+            # 降级一：shcore 的 Per-Monitor（Win8.1+），客户区不再被位图拉伸
+            ctypes.windll.shcore.SetProcessDpiAwareness(2)
+        except Exception:
+            try:
+                # 降级二：系统级 DPI 感知（Vista+）
+                ctypes.windll.user32.SetProcessDPIAware()
+            except Exception:
+                pass  # 全都不可用就按系统默认走，不影响程序运行
+
 import math
 import queue
-import sys
 import threading
 import tkinter as tk
 import webbrowser
@@ -39,7 +65,7 @@ MESSAGE = "丑丑鱼点已刷新"                  # 固定提醒内容
 POPUP_SECONDS = 8                      # 弹窗自动关闭秒数
 BG = "#009688"                         # 主题色（弹窗底色 / 托盘图标）
 
-APP_VERSION = "1.3.0"                  # 发版时与 git tag 保持一致
+APP_VERSION = "1.3.1"                  # 发版时与 git tag 保持一致
 APP_REPO = "https://github.com/xihuatime/PokeMMO-Feebas-Reminder"
 APP_CONTACT = "1371365690@qq.com"
 
@@ -291,9 +317,6 @@ def main():
     def toggle_sound(icon, item):
         state["sound"] = not state["sound"]
 
-    def test_now(icon, item):
-        fire()
-
     def show_window(icon, item):
         window.show()
 
@@ -307,7 +330,6 @@ def main():
         pystray.Menu.SEPARATOR,
         pystray.MenuItem("开启提醒", toggle_enabled, checked=lambda i: state["enabled"]),
         pystray.MenuItem("提示音", toggle_sound, checked=lambda i: state["sound"]),
-        pystray.MenuItem("立即提醒一次", test_now),
         pystray.Menu.SEPARATOR,
         pystray.MenuItem("退出", quit_app),
     )

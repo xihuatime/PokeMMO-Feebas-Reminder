@@ -37,7 +37,7 @@ The whole thing is a single `.exe`: the main window shows the current time and a
 - 🖥️ **系统托盘驻留** — 关掉主窗口即收回托盘，不占任务栏空间、计时不中断，适合长期后台挂着。
 - 🔔 **三重提醒** — 系统通知、置顶弹窗、提示音同时触发，任一通道被系统拦截也不至于错过。
 - 👀 **状态可见** — 鼠标悬停托盘图标，即可看到下次提醒的具体时刻。
-- 🎛️ **灵活开关** — 托盘右键菜单可随时暂停/恢复提醒、单独关闭提示音、立即测试一次，或一键退出。
+- 🎛️ **灵活开关** — 托盘右键菜单可随时暂停/恢复提醒、单独关闭提示音，或一键退出。
 - 📦 **单文件绿色版** — 免安装，下载双击即用，目标机器无需 Python 环境。
 - 🤖 **云端自动构建** — 推送版本标签后由 GitHub Actions 自动打包并发布 Release。
 - 🪶 **低资源占用** — 单进程常驻约 30–50 MB，空闲时 CPU 接近 0。
@@ -60,7 +60,7 @@ The whole thing is a single `.exe`: the main window shows the current time and a
 
 1. 打开 [Releases](../../releases/latest) 页面，下载最新版的 `PokeMMO-Feebas-Reminder.exe`。
 2. 双击运行，托盘出现绿色小鱼图标即启动成功，无需安装。
-3. 右键托盘图标可开关提醒；想先看效果，点「立即提醒一次」。
+3. 右键托盘图标可开关提醒、暂停计时，关闭主窗口则收回托盘继续后台运行。
 
 > 首次运行 Windows SmartScreen 可能提示「已保护你的电脑」，点「更多信息」→「仍要运行」即可（exe 未做代码签名）。
 
@@ -68,7 +68,7 @@ The whole thing is a single `.exe`: the main window shows the current time and a
 
 1. Open the [Releases](../../releases/latest) page and download the latest `PokeMMO-Feebas-Reminder.exe`.
 2. Double-click it — a green fish icon appears in the tray and it is running. No installation.
-3. Right-click the tray icon to toggle reminders, or hit **Fire a test reminder** to see it in action.
+3. Right-click the tray icon to pause or resume reminders; closing the main window drops it into the tray and keeps counting.
 
 > Windows SmartScreen may warn "Windows protected your PC" on first launch. Click **More info** → **Run anyway** — the binary is simply not code-signed.
 
