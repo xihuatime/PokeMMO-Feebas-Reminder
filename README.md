@@ -18,13 +18,13 @@ If this project saves you a few missed refreshes, a ⭐ Star is appreciated.
 
 **中文**
 
-PokeMMO 丰源地区 119 号路的丑丑鱼点按固定周期刷新，靠手感掐时间总会差那么几十秒，切出去看时钟又会打断钓鱼节奏。这个工具把计时交给后台：设好周期，它就在托盘里安静地数着，到点用系统通知、置顶弹窗和提示音同时提醒你。
+PokeMMO 丰源地区 119 号路、神奥地区天冠山的丑丑鱼点按固定周期刷新，靠手感掐时间总会差那么几十秒，切出去看时钟又会打断钓鱼节奏。这个工具把计时交给后台：设好周期，它就在托盘里安静地数着，到点用系统通知、置顶弹窗和提示音同时提醒你。
 
 整个软件只有一个 exe：主界面实时显示当前时间与距离下次刷新的倒计时，右上角可查看版本与联系方式，关掉窗口就收回托盘继续计时。没有安装向导、不写注册表。周期算法按绝对时间取整，跨天自动衔接；只要周期分钟数能整除 1440（单日总分钟数），提醒时刻就永远不会逐日漂移。
 
 **English**
 
-Fish spots on Route 119 in PokeMMO's Hoenn region refresh on a fixed interval. Timing it by feel always lands a few seconds off, and alt-tabbing to check the clock breaks your rhythm. This tool takes the timing off your hands: set the interval once, and it counts quietly in the tray, then fires a system notification, a topmost popup, and a sound cue at exactly the right moment.
+Fish spots on Route 119 in PokeMMO's Hoenn region and in Mt. Coronet in Sinnoh refresh on a fixed interval. Timing it by feel always lands a few seconds off, and alt-tabbing to check the clock breaks your rhythm. This tool takes the timing off your hands: set the interval once, and it counts quietly in the tray, then fires a system notification, a topmost popup, and a sound cue at exactly the right moment.
 
 The whole thing is a single `.exe`: the main window shows the current time and a live countdown to the next refresh, the corner holds version and contact info, and closing the window drops it back into the tray. No installer, no registry writes. The scheduler rounds against absolute time, so cycles roll over midnight seamlessly. As long as the interval divides 1440 evenly (minutes in a day), reminder times never drift from one day to the next.
 
@@ -59,7 +59,7 @@ The whole thing is a single `.exe`: the main window shows the current time and a
 **中文**
 
 1. 打开 [Releases](../../releases/latest) 页面，下载最新版的 `PokeMMO-Feebas-Reminder.exe`。
-2. 双击运行，托盘出现绿色小鱼图标即启动成功，无需安装。
+2. 双击运行，托盘出现美纳斯图标即启动成功，无需安装。
 3. 右键托盘图标可开关提醒、暂停计时，关闭主窗口则收回托盘继续后台运行。
 
 > 首次运行 Windows SmartScreen 可能提示「已保护你的电脑」，点「更多信息」→「仍要运行」即可（exe 未做代码签名）。
@@ -67,7 +67,7 @@ The whole thing is a single `.exe`: the main window shows the current time and a
 **English**
 
 1. Open the [Releases](../../releases/latest) page and download the latest `PokeMMO-Feebas-Reminder.exe`.
-2. Double-click it — a green fish icon appears in the tray and it is running. No installation.
+2. Double-click it — a Milotic icon appears in the tray and it is running. No installation.
 3. Right-click the tray icon to pause or resume reminders; closing the main window drops it into the tray and keeps counting.
 
 > Windows SmartScreen may warn "Windows protected your PC" on first launch. Click **More info** → **Run anyway** — the binary is simply not code-signed.
