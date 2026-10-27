@@ -44,7 +44,7 @@ MESSAGE = "丑丑鱼点已刷新"
 POPUP_SECONDS = 8
 BG = "#009688"
 
-APP_VERSION = "1.3.2"
+APP_VERSION = "1.3.3"
 APP_REPO = "https://github.com/xihuatime/PokeMMO-Feebas-Reminder"
 APP_CONTACT = "1371365690@qq.com"
 
