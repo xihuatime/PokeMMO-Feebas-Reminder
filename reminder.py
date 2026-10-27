@@ -22,6 +22,7 @@ import queue
 import sys
 import threading
 import tkinter as tk
+import webbrowser
 from datetime import datetime, timedelta
 
 import pystray
@@ -36,7 +37,16 @@ ANCHOR = datetime(2020, 1, 1, 22, 15)  # 相位锚点：某个普通日期的 22
 PERIOD_MIN = 45                        # 固定周期（分钟）
 MESSAGE = "丑丑鱼点已刷新"                  # 固定提醒内容
 POPUP_SECONDS = 8                      # 弹窗自动关闭秒数
-BG = "#009688"                         # 弹窗底色
+BG = "#009688"                         # 主题色（弹窗底色 / 托盘图标）
+
+APP_VERSION = "1.3.0"                  # 发版时与 git tag 保持一致
+APP_REPO = "https://github.com/xihuatime/PokeMMO-Feebas-Reminder"
+APP_CONTACT = "1371365690@qq.com"
+
+WIN_W, WIN_H = 440, 360                # 主窗口尺寸
+TEXT = "#1f2328"                       # 主文字色
+MUTED = "#6e7781"                      # 次要文字色
+WEEKDAYS = "一二三四五六日"
 
 
 def next_fire_time(now=None):
@@ -106,7 +116,7 @@ class ReminderThread(threading.Thread):
 
 
 class TrayUI:
-    """tkinter 主线程：隐藏的主窗口 + 提醒弹窗。跨线程通过队列投递，避免直接操作 Tk。"""
+    """tkinter 主线程：提醒弹窗 + 跨线程消息队列。其它线程只往队列投递，不直接操作 Tk。"""
 
     def __init__(self, root):
         self.root = root
@@ -151,6 +161,92 @@ class TrayUI:
         win.lift()
 
 
+class MainWindow:
+    """主窗口：白底，中间大字显示当前时间，下方显示距离下次刷新的倒计时。
+
+    关闭按钮不退出程序，只是收回托盘；要真正退出请用托盘菜单。
+    """
+
+    def __init__(self, root, is_enabled):
+        self.root = root
+        self.is_enabled = is_enabled
+
+        root.title("丑丑鱼点刷新提醒")
+        root.configure(bg="white")
+        root.resizable(False, False)
+        sw, sh = root.winfo_screenwidth(), root.winfo_screenheight()
+        root.geometry("%dx%d+%d+%d" % (WIN_W, WIN_H, (sw - WIN_W) // 2, (sh - WIN_H) // 3))
+        try:  # 有 tkinter 才有 ImageTk，失败就用默认图标，不影响主功能
+            from PIL import ImageTk
+            self._icon = ImageTk.PhotoImage(make_icon_image().resize((64, 64)))
+            root.iconphoto(True, self._icon)
+        except Exception:
+            pass
+
+        self.clock = tk.Label(root, font=("Microsoft YaHei UI", 54, "bold"), fg=TEXT, bg="white")
+        self.clock.pack(pady=(56, 0))
+        self.date = tk.Label(root, font=("Microsoft YaHei UI", 10), fg=MUTED, bg="white")
+        self.date.pack(pady=(2, 0))
+        self.countdown = tk.Label(root, font=("Microsoft YaHei UI", 15), fg=BG, bg="white")
+        self.countdown.pack(pady=(34, 0))
+        self.next_label = tk.Label(root, font=("Microsoft YaHei UI", 10), fg=MUTED, bg="white")
+        self.next_label.pack(pady=(6, 0))
+
+        about = tk.Label(root, text="关于", font=("Microsoft YaHei UI", 9), fg=MUTED,
+                         bg="white", cursor="hand2")
+        about.place(relx=1.0, rely=1.0, x=-16, y=-12, anchor="se")
+        about.bind("<Button-1>", lambda e: self._about())
+
+        root.protocol("WM_DELETE_WINDOW", self.hide)  # 关闭 = 收回托盘，不退出
+        self._tick()
+
+    def _tick(self):
+        now = datetime.now()
+        self.clock.config(text=now.strftime("%H:%M:%S"))
+        self.date.config(text=now.strftime("%Y年%m月%d日 星期") + WEEKDAYS[now.weekday()])
+        if self.is_enabled():
+            target = next_fire_time(now)
+            left = max(0, int((target - now).total_seconds()))
+            self.countdown.config(text="距离下次刷新 %02d:%02d" % (left // 60, left % 60), fg=BG)
+            self.next_label.config(text="下次提醒 %s" % target.strftime("%H:%M"))
+        else:
+            self.countdown.config(text="提醒已暂停", fg=MUTED)
+            self.next_label.config(text="右键托盘图标可恢复")
+        self.root.after(500, self._tick)
+
+    def hide(self):
+        self.root.withdraw()
+
+    def show(self):
+        self.root.deiconify()
+        self.root.lift()
+        self.root.focus_force()
+
+    def _about(self):
+        win = tk.Toplevel(self.root)
+        win.title("关于")
+        win.configure(bg="white")
+        win.resizable(False, False)
+        win.transient(self.root)
+        w, h = 320, 200
+        x = self.root.winfo_rootx() + (WIN_W - w) // 2
+        y = self.root.winfo_rooty() + (WIN_H - h) // 2
+        win.geometry("%dx%d+%d+%d" % (w, h, x, y))
+
+        tk.Label(win, text="丑丑鱼点刷新提醒工具", font=("Microsoft YaHei UI", 13, "bold"),
+                 fg=TEXT, bg="white").pack(pady=(24, 6))
+        tk.Label(win, text="版本 %s" % APP_VERSION, font=("Microsoft YaHei UI", 10),
+                 fg=MUTED, bg="white").pack()
+        tk.Label(win, text="联系作者：%s" % APP_CONTACT, font=("Microsoft YaHei UI", 10),
+                 fg=TEXT, bg="white").pack(pady=(16, 4))
+        link = tk.Label(win, text=APP_REPO, font=("Microsoft YaHei UI", 9),
+                        fg=BG, bg="white", cursor="hand2")
+        link.pack()
+        link.bind("<Button-1>", lambda e: webbrowser.open(APP_REPO))
+        tk.Button(win, text="关闭", command=win.destroy, width=8,
+                  font=("Microsoft YaHei UI", 9)).pack(pady=(18, 0))
+
+
 def make_icon_image():
     """托盘图标：绿圆底 + 白色小鱼（纯图形，不依赖字体）。"""
     img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
@@ -164,10 +260,9 @@ def make_icon_image():
 
 def main():
     root = tk.Tk()
-    root.withdraw()  # 隐藏主窗口，只留托盘图标
-    ui = TrayUI(root)
-
     state = {"enabled": True, "sound": True}
+    window = MainWindow(root, lambda: state["enabled"])
+    ui = TrayUI(root)
     icon_ref = {}  # 托盘图标晚于回调创建，用字典占位
 
     def fire():
@@ -199,15 +294,20 @@ def main():
     def test_now(icon, item):
         fire()
 
+    def show_window(icon, item):
+        window.show()
+
     def quit_app(icon, item):
         reminder.stop()
         icon.stop()
         ui.post("quit")
 
     menu = pystray.Menu(
+        pystray.MenuItem("显示主窗口", show_window, default=True),
+        pystray.Menu.SEPARATOR,
         pystray.MenuItem("开启提醒", toggle_enabled, checked=lambda i: state["enabled"]),
         pystray.MenuItem("提示音", toggle_sound, checked=lambda i: state["sound"]),
-        pystray.MenuItem("立即提醒一次", test_now, default=True),
+        pystray.MenuItem("立即提醒一次", test_now),
         pystray.Menu.SEPARATOR,
         pystray.MenuItem("退出", quit_app),
     )

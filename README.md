@@ -20,20 +20,21 @@ If this project saves you a few missed refreshes, a ⭐ Star is appreciated.
 
 PokeMMO 丰源地区 119 号路的丑丑鱼点按固定周期刷新，靠手感掐时间总会差那么几十秒，切出去看时钟又会打断钓鱼节奏。这个工具把计时交给后台：设好周期，它就在托盘里安静地数着，到点用系统通知、置顶弹窗和提示音同时提醒你。
 
-整个软件只有一个 exe、一个托盘图标，没有主窗口、没有安装向导、不写注册表。周期算法按绝对时间取整，跨天自动衔接；只要周期分钟数能整除 1440（单日总分钟数），提醒时刻就永远不会逐日漂移。
+整个软件只有一个 exe：主界面实时显示当前时间与距离下次刷新的倒计时，右上角可查看版本与联系方式，关掉窗口就收回托盘继续计时。没有安装向导、不写注册表。周期算法按绝对时间取整，跨天自动衔接；只要周期分钟数能整除 1440（单日总分钟数），提醒时刻就永远不会逐日漂移。
 
 **English**
 
 Fish spots on Route 119 in PokeMMO's Hoenn region refresh on a fixed interval. Timing it by feel always lands a few seconds off, and alt-tabbing to check the clock breaks your rhythm. This tool takes the timing off your hands: set the interval once, and it counts quietly in the tray, then fires a system notification, a topmost popup, and a sound cue at exactly the right moment.
 
-The whole thing is one `.exe` and one tray icon — no main window, no installer, no registry writes. The scheduler rounds against absolute time, so cycles roll over midnight seamlessly. As long as the interval divides 1440 evenly (minutes in a day), reminder times never drift from one day to the next.
+The whole thing is a single `.exe`: the main window shows the current time and a live countdown to the next refresh, the corner holds version and contact info, and closing the window drops it back into the tray. No installer, no registry writes. The scheduler rounds against absolute time, so cycles roll over midnight seamlessly. As long as the interval divides 1440 evenly (minutes in a day), reminder times never drift from one day to the next.
 
 ## ✨ 功能特性 / Features
 
 **中文**
 
 - ⏱️ **精准周期算法** — 固定周期全天循环，跨天无缝衔接；周期能整除 1440 时，每天的提醒时刻完全一致，不存在逐日偏移。
-- 🖥️ **系统托盘驻留** — 启动后只在托盘留一个图标，不占任务栏空间，不弹窗打扰，适合长期后台挂着。
+- 🕒 **主界面倒计时** — 大字显示当前时间，下方实时倒数到下次刷新，一眼看清还要等多久。
+- 🖥️ **系统托盘驻留** — 关掉主窗口即收回托盘，不占任务栏空间、计时不中断，适合长期后台挂着。
 - 🔔 **三重提醒** — 系统通知、置顶弹窗、提示音同时触发，任一通道被系统拦截也不至于错过。
 - 👀 **状态可见** — 鼠标悬停托盘图标，即可看到下次提醒的具体时刻。
 - 🎛️ **灵活开关** — 托盘右键菜单可随时暂停/恢复提醒、单独关闭提示音、立即测试一次，或一键退出。
@@ -44,7 +45,8 @@ The whole thing is one `.exe` and one tray icon — no main window, no installer
 **English**
 
 - ⏱️ **Deterministic scheduler** — A fixed interval loops around the clock and rolls over midnight seamlessly. When the interval divides 1440, every day's reminder times are identical — zero drift.
-- 🖥️ **Tray-resident** — One tray icon after launch. No taskbar footprint, no popups in your way; built to sit in the background for weeks.
+- 🕒 **Live countdown** — A large clock with a real-time countdown to the next refresh, so you always know how long is left.
+- 🖥️ **Tray-resident** — Closing the window drops it into the tray. No taskbar footprint, the countdown keeps running; built to sit in the background for weeks.
 - 🔔 **Triple-channel alerts** — System notification, topmost popup, and a sound cue fire together, so a blocked channel never costs you a refresh.
 - 👀 **Next run at a glance** — Hover the tray icon to see exactly when the next reminder is due.
 - 🎛️ **On-demand control** — The tray menu pauses or resumes reminders, mutes the sound, fires a test alert, and exits cleanly.
@@ -76,19 +78,19 @@ The whole thing is one `.exe` and one tray icon — no main window, no installer
 
 > 以下为占位图，把实际截图放进 `docs/images/` 并保持同名即可替换。
 
-| 提醒弹窗 / Popup | 托盘菜单 / Tray Menu |
-| :---: | :---: |
-| ![提醒弹窗](docs/images/popup.png) | ![托盘菜单](docs/images/tray-menu.png) |
-| 到点弹出的置顶提醒窗口 | 右键菜单：开关提醒、提示音、测试、退出 |
+| 主界面 / Main Window | 提醒弹窗 / Popup | 托盘菜单 / Tray Menu |
+| :---: | :---: | :---: |
+| ![主界面](docs/images/main-window.png) | ![提醒弹窗](docs/images/popup.png) | ![托盘菜单](docs/images/tray-menu.png) |
+| 当前时间 + 下次刷新倒计时 | 到点弹出的置顶提醒 | 右键菜单：显示主窗口、开关提醒、提示音、退出 |
 
 **English**
 
 > Placeholders — drop real screenshots into `docs/images/` using the same filenames.
 
-| Popup | Tray Menu |
-| :---: | :---: |
-| ![Popup](docs/images/popup.png) | ![Tray Menu](docs/images/tray-menu.png) |
-| The topmost alert shown when a cycle fires | Right-click menu: toggle, mute, test, quit |
+| Main Window | Popup | Tray Menu |
+| :---: | :---: | :---: |
+| ![Main Window](docs/images/main-window.png) | ![Popup](docs/images/popup.png) | ![Tray Menu](docs/images/tray-menu.png) |
+| Current time + countdown to the next refresh | The topmost alert when a cycle fires | Right-click menu: show window, toggle, mute, quit |
 
 ## ⚙️ 本地运行与构建 / Build from Source
 
